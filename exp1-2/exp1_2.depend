@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1539709914 source:d:\texts\数据结构\exp1-2\main.cpp
+	<iostream>
+	<iomanip>
+	<stdlib.h>
+	<fstream>
+	<string>
+	"..\exp1-1\Llist.h"
+
+1539710201 d:\texts\数据结构\exp1-1\llist.h
+	<iostream>
+	"Node.h"
+	"list.h"
+
+1539336358 d:\texts\数据结构\exp1-1\node.h
+
+1539355003 d:\texts\数据结构\exp1-1\list.h
+
