@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1540296750 source:d:\texts\数据结构\homework2\main.cpp
+	<iostream>
+	"BSTNode.h"
+	"book.h"
+
+1537892361 d:\texts\数据结构\homework2\bstnode.h
+	"BinNode.h"
+
+1537892362 d:\texts\数据结构\homework2\binnode.h
+
+1537892361 d:\texts\数据结构\homework2\book.h
+	<iostream>
+	<cstdlib>
+	<time.h>
+
