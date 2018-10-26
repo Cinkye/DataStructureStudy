@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1537892361 source:d:\texts\数据结构\exp2-2\huffman.cpp
+	"book.h"
+	<cstdio>
+	<cstring>
+	"heap.h"
+	"huffnode.h"
+	"hufftree.h"
+
+1537892361 d:\texts\数据结构\exp2-2\book.h
+	<iostream>
+	<cstdlib>
+	<time.h>
+
+1540569703 d:\texts\数据结构\exp2-2\heap.h
+
+1540569708 d:\texts\数据结构\exp2-2\huffnode.h
+
+1537892362 d:\texts\数据结构\exp2-2\hufftree.h
+
