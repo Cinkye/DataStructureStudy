@@ -1,9 +1,9 @@
-// From the software distribution accompanying the textbook
-// "A Practical Introduction to Data Structures and Algorithm Analysis,
-// Third Edition (C++)" by Clifford A. Shaffer.
-// Source code Copyright (C) 2007-2011 by Clifford A. Shaffer.
-
-// This file includes all of the pieces of the BST implementation
+// Cinkye 201730684427 2018.10.26
+// Most of the basic funtions are copied from the offered resource
+// As for the requirements of the experiment: 
+// The traverse function is in line 96 to line 148
+// The "print BST as a sequence" function is in line
+// The printhelp function is modified to adjust to human (print the right subtree first, then the node, last the left subtree)
 
 // Include the node implementation
 #include "BSTNode.h"
@@ -91,7 +91,7 @@ public:
     else printSequenceHelp(root,0);
   }
 
-  void preorder()
+  void preorder()   // No parameter version of preorder for external use
   {
     if(root==NULL)
       return;
@@ -100,7 +100,7 @@ public:
     preorder(root->right());
   }
   
-  void preorder(BSTNode<Key,E>* r)
+  void preorder(BSTNode<Key,E>* r)    // Parameter version for recursive
   {
     if(r==NULL)
       return;
@@ -109,7 +109,7 @@ public:
     preorder(r->right());
   }
 
-  void inorder()
+  void inorder()    // No parameter version of inorder for external use
   {
     if(root==NULL)
       return;
@@ -118,7 +118,7 @@ public:
     inorder(root->right());
   }
 
-  void inorder(BSTNode<Key,E>* r)
+  void inorder(BSTNode<Key,E>* r)    // Parameter version for recursive
   {
     if(r==NULL)
       return;
@@ -127,7 +127,7 @@ public:
     inorder(r->right());
   }
 
-  void posorder()
+  void posorder()   // No parameter vertion of posorder for external use
   {
     if(root==NULL)
       return;
@@ -136,13 +136,51 @@ public:
     cout << root->element() << " ";
   }
 
-  void posorder(BSTNode<Key,E>* r)
+  void posorder(BSTNode<Key,E>* r)     // Parameter version for recursive
   {
     if(r==NULL)
       return;
     posorder(r->left());
     posorder(r->right());
     cout << r->element() << " ";
+  }
+
+  int leafNodeNum()
+  {
+    static int count = 0;
+    if(root->isLeaf())
+    {
+      count++;
+      cout << "Leaf node no. " << count << " has a value of " << root->element() << endl;
+      return count;
+    }
+    if(root->left()!=NULL)
+    {
+      leafNodeNum(root->left());
+    }
+    if(root->right()!=NULL)
+    {
+      leafNodeNum(root->right());
+    }
+  }
+
+  int leafNodeNum(BSTNode<Key,E>* root)
+  {
+    static int count = 0;
+    if(root->isLeaf())
+    {
+      count++;
+      cout << "Leaf node no. " << count << " has a value of " << root->element() << endl;
+      return count;
+    }
+    if(root->left()!=NULL)
+    {
+      leafNodeNum(root->left());
+    }
+    if(root->right()!=NULL)
+    {
+      leafNodeNum(root->right());
+    }
   }
 };
 
