@@ -1,87 +1,41 @@
-// Cinkye 201730684427 2018.10.26
-// BSTNode.cpp
-// BST Node implementation  
+// From the software distribution accompanying the textbook
+// "A Practical Introduction to Data Structures and Algorithm Analysis,
+// Third Edition (C++)" by Clifford A. Shaffer.
+// Source code Copyright (C) 2007-2011 by Clifford A. Shaffer.
 
-#ifndef BSTNODE_CPP
-#define BSTNODE_CPP
+// This is the file to include for access to the complete binary node
+// template implementation
 
-#include <iostream>
-#include <BinNode.h>
-using namespace std;
+#include "BinNode.h"
 
-template <typename E,typename Key> class BSTNode: public BinNode
-{
-    private:
-    Key k;
-    E element;
-    BSTNode* lc;
-    BSTNode* rc;
+// Simple binary tree node implementation
+template <typename Key, typename E>
+class BSTNode : public BinNode<E> {
+private:
+  Key k;                  // The node's key
+  E it;                   // The node's value
+  BSTNode* lc;            // Pointer to left child
+  BSTNode* rc;            // Pointer to right child
 
-    public:
-    BSTNode()
-    {
-        lc = NULL;
-        rc = NULL;
-        element = 0;
-    }
+public:
+  // Two constructors -- with and without initial values
+  BSTNode() { lc = rc = NULL; }
+  BSTNode(Key K, E e, BSTNode* l =NULL, BSTNode* r =NULL)
+    { k = K; it = e; lc = l; rc = r; }
+  ~BSTNode() {}             // Destructor
 
-    BSTNode(Key key,E it,BSTNode* l = NULL,BSTNode* r = NULL)
-    {
-        k = key;
-        element = it;
-        lc = l;
-        rc = r;
-    }
+  // Functions to set and return the value and key
+  E& element() { return it; }
+  void setElement(const E& e) { it = e; }
+  Key& key() { return k; }
+  void setKey(const Key& K) { k = K; }
 
-    ~BSTNode()
-    {
+  // Functions to set and return the children
+  inline BSTNode* left() const { return lc; }
+  void setLeft(BinNode<E>* b) { lc = (BSTNode*)b; }
+  inline BSTNode* right() const { return rc; }
+  void setRight(BinNode<E>* b) { rc = (BSTNode*)b; }
 
-    }
-
-    void setKey(Key& key)
-    {
-        k = key;
-    }
-
-    Key& Key()
-    {
-        return k;
-    }
-
-    void setElement(E& e)
-    {
-        element = e;
-    }
-
-    E& element()
-    {
-        return element;
-    }
-
-    void setLeft(BSTNode* l)
-    {
-        lc = l;
-    }
-
-    BSTNode* left()
-    {
-        return lc;
-    }
-
-    void setRight(BSTNode* r)
-    {
-        rc = r;
-    }
-
-    BSTNode* right()
-    {
-        return rc;
-    }
-
-    bool isLeaf()
-    {
-        return(lc == NULL && rc == NULL);
-    }
-
-}
-#endif 
+  // Return true if it is a leaf, false otherwise
+  bool isLeaf() { return (lc == NULL) && (rc == NULL); }
+};
