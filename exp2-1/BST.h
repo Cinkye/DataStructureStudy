@@ -1,8 +1,9 @@
 // Cinkye 201730684427 2018.10.26
 // Most of the basic funtions are copied from the offered resource
 // As for the requirements of the experiment: 
-// The traverse function is in line 96 to line 148
-// The "print BST as a sequence" function is in line
+// The traverse function is in line 95 to line 147
+// The "print BST as a sequence" function is in line 88 to line 93, line 284 to line 299
+// The "print leaf node elements and number" function is in line 149 to line 185
 // The printhelp function is modified to adjust to human (print the right subtree first, then the node, last the left subtree)
 
 // Include the node implementation

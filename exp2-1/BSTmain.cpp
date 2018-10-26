@@ -34,10 +34,10 @@ int main(int argc, char const *argv[])
 
     // Print the two BSTs
     cout << "BST looks like this:" << endl;
-    bst->print();
+    bst->print();           // Print the first BST
     cout << endl << endl;
     cout << "BST2 looks like this:" << endl;
-    bst2->print();
+    bst2->print();          // Print the second BST
     cout << endl;
 
     // Print the first BST as a sequence
@@ -51,9 +51,9 @@ int main(int argc, char const *argv[])
     bst->inorder();         // Inorder
     cout << endl << "Posorder: ";
     bst->posorder();        // Posorder
-    cout << endl;
+    cout << endl << endl;
 
     // Testing leaf node number function
-    cout << "The number of leaf nodes is " << bst->leafNodeNum();
+    cout << bst->leafNodeNum() << " leaf nodes in total." << endl;
 }
 
