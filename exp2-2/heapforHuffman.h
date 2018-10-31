@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include "huffnode.h"
+#include "hufftree.h"
+#include "windows.h"
 using namespace std;
 
 class huffmanHeap{
 private:
-    HuffNode<char>** root;
+    HuffTree<char>* root;
     int maxsize;
     int n;
 
@@ -17,17 +19,20 @@ private:
         {
             int lc = leftchild(pos);
             int rc = rightchild(pos);
-            if((rc < n) && (**root[rc] < **root[lc]))
-               lc = rc;
-            if(*(*root[pos]) < **root[lc])
-                return;
-            swap(*root,pos,lc);
+            if((rc < n) && root[rc].weight() <= root[lc].weight())
+                lc = rc;
+            if(root[pos].weight() <= root[lc].weight())
+            {
+                HuffTree<char> tmp = root[pos];
+                root[pos] = root[lc];
+                root[lc] = tmp;
+            }
             pos = lc;
         }
     }
 
 public:
-    huffmanHeap(HuffNode<char>** h,int num,int max)
+    huffmanHeap(HuffTree<char>* h,int num,int max)
     {
         root = h;
         n = num;
@@ -66,7 +71,7 @@ public:
             siftdown(i);
     }
 
-    void insert(const HuffNode<char>& it)
+    void insert(const HuffTree<char>& it)
     {
         if(n > maxsize)
         {
@@ -74,48 +79,61 @@ public:
             return;
         }
         int curr = n++;
-        **root[curr] = it;
-        while ((curr!=0) && (**root[curr] < **root[parent(curr)]))
+        root[curr] = it;
+        while((curr!=0) && root[curr].weight() <= root[parent(curr)].weight())
         {
-            swap(*root,curr,parent(curr));
+            HuffTree<char> tmp = root[curr];
+            root[curr] = root[parent(curr)];
+            root[parent(curr)] = tmp;
             curr = parent(curr);
         }
     }
 
-    HuffNode<char> removefirst()
+    HuffTree<char> removefirst()
     {
         if(n <= 0)
         {
             cout << "Heap is empty" << endl;
-            return;
+            exit(-1);
         }
-        swap(*root,0,--n);
+        HuffTree<char> tmp = root[0];
+        root[0] = root[--n];
+        root[n] = tmp;
         if (n != 0)
-            siftdown(0)
-        return **root[n];
+            siftdown(0);
+        return root[n];
     }
 
-    HuffNode<char> remove(int pos)
+    HuffTree<char> remove(int pos)
     {
         if(pos < 0 || pos >= n)
         {
             cout << "Bad position" << endl;
-            return NULL;
+            exit(-1);
         }
         if(pos == n-1)
             n--;
         else
         {
-            swap(*root,pos,--n)
-            while((pos != 0) && (**root[pos] < **root[parent(pos])))
+            HuffTree<char> tmp = root[pos];
+            root[pos] = root[--n];
+            root[n] = tmp;
+            while((pos != 0) && (root[pos].weight() < root[parent(pos)].weight()))
             {
-                swap(*root,pos,parent(pos));
+                HuffTree<char> tmp = root[pos];
+                root[pos] = root[parent(pos)];
+                root[parent(pos)] = tmp;
                 pos = parent(pos);
             }
             if(n != 0)
                 siftdown(pos);
         }
-        return **root[n];
+        return root[n];
+    }
+
+    void print()
+    {
+        root->print();
     }
 };
 

@@ -5,17 +5,41 @@
 
 // HuffTree is a template of two parameters: the element
 //  type being coded and a comparator for two such elements.
+#ifndef HUFFTREE_H
+#define HUFFTREE_H
+#include <iostream>
+
+using namespace std;
+
 template <typename E>
 class HuffTree {
 private:
   HuffNode<E>* Root;         // Tree root
 public:
-  HuffTree(E& val, int freq) // Leaf constructor
-    { Root = new LeafNode<E>(val, freq); }
+  HuffTree(E val, int freq) // Leaf constructor
+  {
+      Root = new LeafNode<E>(val, freq);
+  }
+
   // Internal node constructor
   HuffTree(HuffTree<E>* l, HuffTree<E>* r)
-    { Root = new IntlNode<E>(l->root(), r->root()); }
-  ~HuffTree() {}                          // Destructor
+  {
+      Root = new IntlNode<E>(l->root(), r->root());
+  }
+
+  ~HuffTree() // Destructor
+  {
+
+  }
+
   HuffNode<E>* root() { return Root; }    // Get root
+
   int weight() { return Root->weight(); } // Root weight
+
+  void print()
+  {
+      Root->print();
+  }
 };
+
+#endif // HUFFTREE_H

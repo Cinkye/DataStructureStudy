@@ -25,7 +25,7 @@
 		</Compiler>
 		<Unit filename="book.h" />
 		<Unit filename="heap.h" />
-		<Unit filename="huffman.cpp" />
+		<Unit filename="heapforHuffman.h" />
 		<Unit filename="huffnode.h" />
 		<Unit filename="hufftree.h" />
 		<Unit filename="main.cpp" />
