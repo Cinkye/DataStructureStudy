@@ -9,9 +9,9 @@
 
 using namespace std;
 
-string readCode(int n,huffmanHeap* heap)
+string readCode(char c,huffmanHeap* heap)
 {
-
+    // To be finished......
 }
 
 int main()
