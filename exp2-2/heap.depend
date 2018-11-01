@@ -20,13 +20,13 @@
 1540988308 d:\texts\数据结构\exp2-2\hufftree.h
 	<iostream>
 
-1540989125 source:d:\texts\数据结构\exp2-2\main.cpp
+1541047574 source:d:\texts\数据结构\exp2-2\main.cpp
 	<iostream>
 	"huffnode.h"
 	"hufftree.h"
 	"heapforHuffman.h"
 
-1540989173 d:\texts\数据结构\exp2-2\heapforhuffman.h
+1541047784 d:\texts\数据结构\exp2-2\heapforhuffman.h
 	<iostream>
 	"huffnode.h"
 	"hufftree.h"

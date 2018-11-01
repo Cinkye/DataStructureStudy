@@ -34,6 +34,7 @@ int main()
         HuffTree<char>* par = new HuffTree<char>(cptr1,cptr2);
         heap->insert(*par);
         cout << heap->size() << endl;
+        heap->print();
     }
-    heap->print();
+
 }

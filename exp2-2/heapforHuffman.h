@@ -21,12 +21,10 @@ private:
             int rc = rightchild(pos);
             if((rc < n) && root[rc].weight() <= root[lc].weight())
                 lc = rc;
-            if(root[pos].weight() <= root[lc].weight())
-            {
-                HuffTree<char> tmp = root[pos];
-                root[pos] = root[lc];
-                root[lc] = tmp;
-            }
+            if(root[pos].weight() <= root[lc].weight()) return;
+            HuffTree<char> tmp = root[pos];
+            root[pos] = root[lc];
+            root[lc] = tmp;
             pos = lc;
         }
     }
@@ -133,7 +131,12 @@ public:
 
     void print()
     {
-        root->print();
+        for(int i = 0;i < n;++i)
+        {
+            root[i].print();
+            cout << endl;
+        }
+        cout << endl;
     }
 };
 
