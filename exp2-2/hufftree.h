@@ -1,10 +1,6 @@
-// From the software distribution accompanying the textbook
-// "A Practical Introduction to Data Structures and Algorithm Analysis,
-// Third Edition (C++)" by Clifford A. Shaffer.
-// Source code Copyright (C) 2007-2011 by Clifford A. Shaffer.
-
-// HuffTree is a template of two parameters: the element
-//  type being coded and a comparator for two such elements.
+// Cinkye 201730684427 2018.11.1
+// This header file is modified on the basis of the resource
+// Huffman tree implementation hufftree.h
 #ifndef HUFFTREE_H
 #define HUFFTREE_H
 #include <iostream>
@@ -36,9 +32,14 @@ public:
 
   int weight() { return Root->weight(); } // Root weight
 
-  void print()
+  void print()      // Print the tree
   {
       Root->print();
+  }
+
+  void code()       // Code the tree
+  {
+      Root->code("","");        // Root node has no code
   }
 };
 

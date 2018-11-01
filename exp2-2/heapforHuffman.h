@@ -1,5 +1,8 @@
-#ifndef HEAPFORHUFFMAN_H_INCLUDED
-#define HEAPFORHUFFMAN_H_INCLUDED
+// Cinkye 201730684427 2018.11.1
+// A heap implementation for huffman tree       heapforHuffman.h
+
+#ifndef HEAPFORHUFFMAN_H
+#define HEAPFORHUFFMAN_H
 
 #include <iostream>
 #include "huffnode.h"
@@ -137,6 +140,11 @@ public:
             cout << endl;
         }
         cout << endl;
+    }
+
+    void code()
+    {
+        root->code();
     }
 };
 
