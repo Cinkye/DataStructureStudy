@@ -41,6 +41,11 @@ public:
   {
       Root->code("","");        // Root node has no code
   }
+
+  string getCode(char c)        // Get the code for specific letter
+  {
+      return Root->getCode(c);
+  }
 };
 
 #endif // HUFFTREE_H

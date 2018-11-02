@@ -14,7 +14,7 @@ public:
   virtual bool isLeaf() = 0;            // Determine type
   virtual void print() = 0;             // Print the node
   virtual void code(string par, string a) = 0;      // Give the node Huffman code
-  virtual string getCode() = 0;
+  virtual string getCode(char c) = 0;       // Get the code for specific letter
 };
 template <typename E>   // Internal node subclass
 class IntlNode : public HuffNode<E> {
@@ -68,9 +68,10 @@ public:
       rc->code(Huffcode,"1");           // give the right child a "1"
   }
 
-  string getCode()          // Return the Huffman code of the node
+  string getCode(char c)          // Get the code for specific letter
   {
-      return Huffcode;
+      string s = lc->getCode(c) + rc->getCode(c);       // If the node is a internal node, return the code combined by its children's code
+      return s;
   }
 
 };
@@ -80,7 +81,7 @@ class LeafNode : public HuffNode<E> {
 private:
   E it;			// Value
   int wgt;		// Weight
-  string Huffcode;      // Huffcode
+  string Huffcode;      // Huffman code
 public:
   LeafNode(const E& val, int freq)   // Constructor
   {
@@ -113,9 +114,11 @@ public:
       Huffcode = par + a;
   }
 
-  string getCode()          // Return the Huffman code of the node
-  {
-      return Huffcode;
+  string getCode(char c)          // Get the code for specific letter
+      if(c == it)           // If matched, return Huffcode
+        return Huffcode;
+      else      // Else return a empty string
+        return "";
   }
 
 };

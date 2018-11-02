@@ -146,6 +146,11 @@ public:
     {
         root->code();
     }
+
+    string getCode(char c)      // Get the code for specific letter
+    {
+        return root->getCode(c);
+    }
 };
 
 #endif // HEAPFORHUFFMAN_H_INCLUDED

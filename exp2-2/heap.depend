@@ -14,19 +14,20 @@
 
 1540569703 d:\texts\数据结构\exp2-2\heap.h
 
-1540989001 d:\texts\数据结构\exp2-2\huffnode.h
+1541144089 d:\texts\数据结构\exp2-2\huffnode.h
+	<iostream>
+	<string>
+
+1541143781 d:\texts\数据结构\exp2-2\hufftree.h
 	<iostream>
 
-1540988308 d:\texts\数据结构\exp2-2\hufftree.h
-	<iostream>
-
-1541047574 source:d:\texts\数据结构\exp2-2\main.cpp
+1541143908 source:d:\texts\数据结构\exp2-2\main.cpp
 	<iostream>
 	"huffnode.h"
 	"hufftree.h"
 	"heapforHuffman.h"
 
-1541047784 d:\texts\数据结构\exp2-2\heapforhuffman.h
+1541143836 d:\texts\数据结构\exp2-2\heapforhuffman.h
 	<iostream>
 	"huffnode.h"
 	"hufftree.h"

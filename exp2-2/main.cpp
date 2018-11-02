@@ -3,15 +3,26 @@
 // HuffmanTreeMain.cpp
 
 #include <iostream>
+#include <stdio.h>
 #include "huffnode.h"
 #include "hufftree.h"
 #include "heapforHuffman.h"
 
 using namespace std;
 
-string readCode(char c,huffmanHeap* heap)
+string readCode(char c,huffmanHeap* heap)   // Return the Huffman code of a letter
 {
-    // To be finished......
+    return heap->getCode(c);
+}
+
+string Encrypt(huffmanHeap* heap)       // Encrypt a specified string that the user input
+{
+    string code = "";           // A string to hold Huffman code
+    while(cin.peek()!=EOF)      // While not end of input
+    {
+        code += readCode(cin.get(),heap);       // Append the code
+    }
+    return code;        // Return
 }
 
 int main()
@@ -40,5 +51,8 @@ int main()
         heap->code();           // Give the nodes Huffman codes
         heap->print();          // Print the heap
     }
+
+    cout << "Translate a string into Huffman code (Ctrl + Z to end input):" << endl;        // Test encryption
+    cout << Encrypt(heap) << endl;
 
 }
