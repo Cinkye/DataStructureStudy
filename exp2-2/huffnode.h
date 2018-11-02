@@ -114,7 +114,8 @@ public:
       Huffcode = par + a;
   }
 
-  string getCode(char c)          // Get the code for specific letter
+  string getCode(char c)        // Get the code for specific letter
+  {
       if(c == it)           // If matched, return Huffcode
         return Huffcode;
       else      // Else return a empty string
