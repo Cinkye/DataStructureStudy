@@ -57,14 +57,53 @@ void bubbleSort(double* nums,int size)
     }
 }
 
-void ShellSort(double* nums,int size)
+void shellHelp(double* nums,int size,int gap)
 {
-
+    for(int i = gap;i < size;i += gap)
+    {
+        for(int j = i;j >= gap;--j)
+        {
+            if(nums[j]<nums[j-gap])
+            {
+                double tmp = nums[j];
+                nums[j] = nums[j-gap];
+                nums[j-gap] = tmp;
+            }
+            else break;
+        }
+    }
 }
 
-void mergeSort(double* nums,int size)
+void ShellSort(double* nums,int size)
 {
+    for(int i = size / 2;i > 2 ;i /= 2)
+    {
+        for(int j = 0;j < i;++j)
+            shellHelp(&nums[j],size-j,i);
+    }
+    shellHelp(nums,size,1);
+}
 
+void mergeSort(double* nums,double* temp,int left,int right)
+{
+    if(left == right)   return;
+    int mid = (left + right) / 2;
+    mergeSort(nums,temp,left,mid);
+    mergeSort(nums,temp,mid+1,right);
+    for(int i = left;i<=right;++i)
+        temp[i] = nums[i];
+    int l = left,r = mid + 1;
+    for(int curr = left;curr <= right;++curr)
+    {
+        if(l == mid+1)
+            nums[curr] = temp[r++];
+        else if(r > right)
+            nums[curr] = temp[l++];
+        else if(temp[l] < temp[r])
+            nums[curr] = temp[l++];
+        else
+            nums[curr] = temp[r++];
+    }
 }
 
 void quickSort()
@@ -89,7 +128,9 @@ int main()
     for(int i = 0;i < 10000;++i)
         d[i] = ((int)(rand()*rand()%3000000))/100.0 ;
     clock_t start = clock();
-    insSort(d,10000);
+    //ShellSort(d,10000);
+    double temp[10000];
+    mergeSort(d,temp,0,10000);
     clock_t end = clock();
     int count = 1;
     for(int i = 0;i < 10000;++i)
