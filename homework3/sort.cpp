@@ -5,6 +5,7 @@
 #include <ctime>
 #include <stdlib.h>
 #include <iomanip>
+#include "heap.h"
 
 using namespace std;
 
@@ -106,14 +107,57 @@ void mergeSort(double* nums,double* temp,int left,int right)
     }
 }
 
-void quickSort()
+void quickSort(double* nums,int left,int right)
 {
-
+    if(right <= left)
+        return;
+    int pivotIndex = (left + right) / 2;
+    // Swap pivot to the end
+    double tmp = nums[pivotIndex];
+    nums[pivotIndex] = nums[right];
+    nums[right] = tmp;
+    int l = left;
+    int r = right - 1;
+//    while(l < r)
+//    {
+//        if(nums[r] < nums[right])
+//        {
+//            if(nums[l] > nums[right])
+//            {
+//                tmp = nums[r];
+//                nums[r] = nums[l];
+//                nums[l] = tmp;
+//                l++;
+//                r--;
+//            }
+//            else
+//                l++;
+//        }
+//        else
+//            r--;
+//    }
+    do
+    {
+        while(nums[++l]<nums[right]);
+        while(l < r && nums[right] < nums[--r]);
+        tmp = nums[l];
+        nums[l] = nums[r];
+        nums[r] = tmp;
+    }while(l < r);
+    tmp = nums[right];
+    nums[right] = nums[l];
+    nums[l] = tmp;
+    //insSort(nums,l);
+    quickSort(nums,left,l-1);
+    quickSort(nums,l+1,right);
 }
 
-void heapSort()
+void heapSort(double* nums,int size)
 {
-
+    double max;
+    heap<double> h(nums,size,size);
+    for(int i = 0;i < size;++i)
+        max = h.removefirst();
 }
 
 void radixSort()
@@ -129,8 +173,10 @@ int main()
         d[i] = ((int)(rand()*rand()%3000000))/100.0 ;
     clock_t start = clock();
     //ShellSort(d,10000);
-    double temp[10000];
-    mergeSort(d,temp,0,10000);
+    //double temp[10000];
+    //mergeSort(d,temp,0,10000);
+    //quickSort(a,0,9);
+    heapSort(d,10000);
     clock_t end = clock();
     int count = 1;
     for(int i = 0;i < 10000;++i)
