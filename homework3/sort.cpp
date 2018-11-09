@@ -118,38 +118,67 @@ void quickSort(double* nums,int left,int right)
     nums[right] = tmp;
     int l = left;
     int r = right - 1;
-//    while(l < r)
-//    {
-//        if(nums[r] < nums[right])
-//        {
-//            if(nums[l] > nums[right])
-//            {
-//                tmp = nums[r];
-//                nums[r] = nums[l];
-//                nums[l] = tmp;
-//                l++;
-//                r--;
-//            }
-//            else
-//                l++;
-//        }
-//        else
-//            r--;
-//    }
-    do
+    while(l < r)
     {
-        while(nums[++l]<nums[right]);
-        while(l < r && nums[right] < nums[--r]);
-        tmp = nums[l];
-        nums[l] = nums[r];
-        nums[r] = tmp;
-    }while(l < r);
-    tmp = nums[right];
-    nums[right] = nums[l];
-    nums[l] = tmp;
-    //insSort(nums,l);
-    quickSort(nums,left,l-1);
-    quickSort(nums,l+1,right);
+        if(nums[r] < nums[right])
+        {
+            if(nums[l] > nums[right])
+            {
+               tmp = nums[r];
+               nums[r] = nums[l];
+               nums[l] = tmp;
+               l++;
+               r--;
+            }
+            else
+               l++;
+        }
+        else
+           r--;
+   }
+    // do
+    // {
+    //     while(nums[++l]<nums[right]);
+    //     while(l < r && nums[right] < nums[--r]);
+    //     tmp = nums[l];
+    //     nums[l] = nums[r];
+    //     nums[r] = tmp;
+    // }while(l < r);
+    // tmp = nums[right];
+    // nums[right] = nums[l];
+    // nums[l] = tmp;
+    // //insSort(nums,l);
+    // quickSort(nums,left,l-1);
+    // quickSort(nums,l+1,right);
+}
+
+inline int partition(int* A, int l, int r, int& pivot) {
+  do {             // Move the bounds inward until they meet
+    while (A[++l] < pivot);  // Move l right and
+    while ((l < r) && pivot < A[--r]); // r left
+    int tmp = A[l];
+    A[l] = A[r];
+    A[r] = tmp;              // Swap out-of-place values
+  } while (l < r);              // Stop when they cross
+  return l;      // Return first position in right partition
+}
+
+void qsort(int* nums, int i, int j) { // Quicksort
+  if (j <= i) 
+  {
+      return;
+  }
+  int pivotIndex = (i + j) / 2;
+  int tmp = nums[pivotIndex];
+  nums[pivotIndex] = nums[j];
+  nums[j] = tmp;    // Put pivot at end
+  // k will be the first position in the right subarray
+  int k = partition(nums, i-1, j, nums[j]);
+  tmp = nums[i];
+  nums[i] = nums[j];
+  nums[j] = tmp;             // Put pivot in place
+  qsort(nums, i, k-1);
+  qsort(nums, k+1, j);
 }
 
 void heapSort(double* nums,int size)
@@ -160,23 +189,46 @@ void heapSort(double* nums,int size)
         max = h.removefirst();
 }
 
-void radixSort()
-{
 
+void radix(int A[], int B[], int n, int k, int r, int cnt[]) {
+  // cnt[i] stores number of records in bin[i]
+  int j;
+
+  for (int i=0, rtoi=1; i<k; i++, rtoi*=r) { // For k digits
+    for (j=0; j<r; j++) cnt[j] = 0;        // Initialize cnt
+
+    // Count the number of records for each bin on this pass
+    for (j=0; j<n; j++) cnt[(A[j]/rtoi)%r]++;
+
+    // // Index B: cnt[j] will be index for last slot of bin j.
+    for (j=1; j<r; j++) cnt[j] = cnt[j-1] + cnt[j];
+
+    // // Put records into bins, work from bottom of each bin.
+    // // Since bins fill from bottom, j counts downwards
+    for (j=n-1; j>=0; j--)
+      B[--cnt[A[j]/rtoi%r]] = A[j];
+
+    for (j=0; j<n; j++) A[j] = B[j];    // Copy B back to A
+  }
 }
+
 
 int main()
 {
-    double d[10000];
+    int d[10000];
     srand((int)time(0));
     for(int i = 0;i < 10000;++i)
-        d[i] = ((int)(rand()*rand()%3000000))/100.0 ;
+        d[i] = abs(((int)(rand()*rand()%3000000))/100.0) ;
     clock_t start = clock();
     //ShellSort(d,10000);
     //double temp[10000];
     //mergeSort(d,temp,0,10000);
-    //quickSort(a,0,9);
-    heapSort(d,10000);
+    //quickSort(d,0,9999);
+    qsort(d,0,9999);
+    //heapSort(d,10000);
+    int tmp[10000];
+    int cnt[10];
+    radix(d,tmp,9999,5,10,cnt);
     clock_t end = clock();
     int count = 1;
     for(int i = 0;i < 10000;++i)
