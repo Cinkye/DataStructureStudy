@@ -190,7 +190,7 @@ void heapSort(double* nums,int size)
 }
 
 
-void radix(int A[], int B[], int n, int k, int r, int cnt[]) {
+void radix(double A[], double B[], int n, int k, int r, int cnt[]) {
   // cnt[i] stores number of records in bin[i]
   int j;
 
@@ -198,7 +198,7 @@ void radix(int A[], int B[], int n, int k, int r, int cnt[]) {
     for (j=0; j<r; j++) cnt[j] = 0;        // Initialize cnt
 
     // Count the number of records for each bin on this pass
-    for (j=0; j<n; j++) cnt[(A[j]/rtoi)%r]++;
+    for (j=0; j<n; j++) cnt[(int)(A[j]*100/rtoi)%r]++;
 
     // // Index B: cnt[j] will be index for last slot of bin j.
     for (j=1; j<r; j++) cnt[j] = cnt[j-1] + cnt[j];
@@ -206,7 +206,7 @@ void radix(int A[], int B[], int n, int k, int r, int cnt[]) {
     // // Put records into bins, work from bottom of each bin.
     // // Since bins fill from bottom, j counts downwards
     for (j=n-1; j>=0; j--)
-      B[--cnt[A[j]/rtoi%r]] = A[j];
+      B[--cnt[(int)(A[j]*100/rtoi)%r]] = A[j];
 
     for (j=0; j<n; j++) A[j] = B[j];    // Copy B back to A
   }
@@ -215,7 +215,7 @@ void radix(int A[], int B[], int n, int k, int r, int cnt[]) {
 
 int main()
 {
-    int d[10000];
+    double d[10000];
     srand((int)time(0));
     for(int i = 0;i < 10000;++i)
         d[i] = abs(((int)(rand()*rand()%3000000))/100.0) ;
@@ -224,11 +224,11 @@ int main()
     //double temp[10000];
     //mergeSort(d,temp,0,10000);
     //quickSort(d,0,9999);
-    qsort(d,0,9999);
+    // qsort(d,0,9999);
     //heapSort(d,10000);
-    int tmp[10000];
+    double tmp[10000];
     int cnt[10];
-    radix(d,tmp,9999,5,10,cnt);
+    radix(d,tmp,10000,7,10,cnt);
     clock_t end = clock();
     int count = 1;
     for(int i = 0;i < 10000;++i)
