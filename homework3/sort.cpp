@@ -109,8 +109,11 @@ void mergeSort(double* nums,double* temp,int left,int right)
 
 void quickSort(double* nums,int left,int right)
 {
-    if(right <= left)
+    if(right - left <= 9)
+    {
+        insSort(&nums[left],right - left);
         return;
+    }
     int pivotIndex = (left + right) / 2;
     // Swap pivot to the end
     double tmp = nums[pivotIndex];
@@ -148,28 +151,28 @@ void quickSort(double* nums,int left,int right)
     // nums[right] = nums[l];
     // nums[l] = tmp;
     // //insSort(nums,l);
-    // quickSort(nums,left,l-1);
-    // quickSort(nums,l+1,right);
+    quickSort(nums,left,l);
+    quickSort(nums,l+1,right);
 }
 
-inline int partition(int* A, int l, int r, int& pivot) {
+inline int partition(double* A, int l, int r, double& pivot) {
   do {             // Move the bounds inward until they meet
     while (A[++l] < pivot);  // Move l right and
     while ((l < r) && pivot < A[--r]); // r left
-    int tmp = A[l];
+    double tmp = A[l];
     A[l] = A[r];
     A[r] = tmp;              // Swap out-of-place values
   } while (l < r);              // Stop when they cross
   return l;      // Return first position in right partition
 }
 
-void qsort(int* nums, int i, int j) { // Quicksort
+void qsort(double* nums, int i, int j) { // Quicksort
   if (j <= i) 
   {
       return;
   }
   int pivotIndex = (i + j) / 2;
-  int tmp = nums[pivotIndex];
+  double tmp = nums[pivotIndex];
   nums[pivotIndex] = nums[j];
   nums[j] = tmp;    // Put pivot at end
   // k will be the first position in the right subarray
@@ -224,11 +227,11 @@ int main()
     //double temp[10000];
     //mergeSort(d,temp,0,10000);
     //quickSort(d,0,9999);
-    // qsort(d,0,9999);
+    quickSort(d,0,9999);
     //heapSort(d,10000);
-    double tmp[10000];
-    int cnt[10];
-    radix(d,tmp,10000,7,10,cnt);
+    // double tmp[10000];
+    // int cnt[10];
+    // radix(d,tmp,10000,7,10,cnt);
     clock_t end = clock();
     int count = 1;
     for(int i = 0;i < 10000;++i)
