@@ -139,18 +139,6 @@ void quickSort(double* nums,int left,int right)
         else
            r--;
    }
-    // do
-    // {
-    //     while(nums[++l]<nums[right]);
-    //     while(l < r && nums[right] < nums[--r]);
-    //     tmp = nums[l];
-    //     nums[l] = nums[r];
-    //     nums[r] = tmp;
-    // }while(l < r);
-    // tmp = nums[right];
-    // nums[right] = nums[l];
-    // nums[l] = tmp;
-    // //insSort(nums,l);
     quickSort(nums,left,l);
     quickSort(nums,l+1,right);
 }
@@ -167,7 +155,7 @@ inline int partition(double* A, int l, int r, double& pivot) {
 }
 
 void qsort(double* nums, int i, int j) { // Quicksort
-  if (j <= i) 
+  if (j <= i)
   {
       return;
   }
@@ -219,32 +207,86 @@ void radix(double A[], double B[], int n, int k, int r, int cnt[]) {
 int main()
 {
     double d[10000];
+    double tmp[10000];
     srand((int)time(0));
     for(int i = 0;i < 10000;++i)
-        d[i] = abs(((int)(rand()*rand()%3000000))/100.0) ;
-    clock_t start = clock();
-    //ShellSort(d,10000);
-    //double temp[10000];
-    //mergeSort(d,temp,0,10000);
-    //quickSort(d,0,9999);
-    quickSort(d,0,9999);
-    //heapSort(d,10000);
-    // double tmp[10000];
-    // int cnt[10];
-    // radix(d,tmp,10000,7,10,cnt);
-    clock_t end = clock();
-    int count = 1;
-    for(int i = 0;i < 10000;++i)
+        tmp[i] = d[i] = ((int)(rand()*rand()%3000000))/100.0;
+    int select = 0;
+    for(;select <= 7;++select)
     {
-        cout << fixed << setprecision(2) << setw(8) << d[i] << " ";
-        if(count != 10)
-            ++count;
-        else
+        for(int i = 0;i < 10000;++i)
+            d[i] = tmp[i];
+        clock_t start = clock();
+        switch(select)
         {
-            count = 1;
-            cout << endl;
+        case 0:
+            {
+                cout << "Doing InsertionSort....." << endl;
+                insSort(d,10000);
+                break;
+            }
+        case 1:
+            {
+                cout << "Doing BubbleSort....." << endl;
+                bubbleSort(d,10000);
+                break;
+            }
+        case 2:
+            {
+                cout << "Doing selectionSort....." << endl;
+                selectionSort(d,10000);
+                break;
+            }
+        case 3:
+            {
+                cout << "Doing ShellSort....." << endl;
+                ShellSort(d,10000);
+                break;
+            }
+        case 4:
+            {
+                cout << "Doing mergeSort....." << endl;
+                double temp[10000];
+                mergeSort(d,temp,0,10000);
+                break;
+            }
+        case 5:
+            {
+                cout << "Doing quickSort......" << endl;
+                quickSort(d,0,9999);
+                break;
+            }
+        case 6:
+            {
+                cout << "Doing heapSort......" << endl;
+                heapSort(d,10000);
+                break;
+            }
+        case 7:
+            {
+                cout << "Doing radixSort....." << endl;
+                double tmp[10000];
+                int cnt[10];
+                radix(d,tmp,10000,7,10,cnt);
+            }
         }
+        clock_t end = clock();
+        cout << "Time it takes is " << (double)(end - start)/(double)CLOCKS_PER_SEC*1000.0 << " ms." << endl << endl;
     }
-    cout << "Time it takes is " << (double)(end - start)/(double)CLOCKS_PER_SEC*1000.0 << " ms." << endl;
+
+//    codes for outputting the array
+//    int count = 1;
+//    for(int i = 0;i < 10000;++i)
+//    {
+//        cout << fixed << setprecision(2) << setw(8) << d[i] << " ";
+//        if(count != 10)
+//            ++count;
+//        else
+//        {
+//            count = 1;
+//            cout << endl;
+//        }
+//    }
+
 
 }
