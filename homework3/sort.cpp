@@ -246,7 +246,7 @@ int main()
         case 4:
             {
                 cout << "Doing mergeSort....." << endl;
-                double temp[10000];
+                double* temp = new double[10000];
                 mergeSort(d,temp,0,10000);
                 break;
             }
