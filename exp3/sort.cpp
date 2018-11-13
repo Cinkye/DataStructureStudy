@@ -9,7 +9,7 @@
 #include "heap.h"
 #include <cmath>
 
-#define NUMS 1000000
+#define NUMS 10000000
 
 using namespace std;
 
@@ -179,6 +179,7 @@ void radix(int A[], int B[], int n, int k, int r, int cnt[]) {
 }
 
 
+
 int main()
 {
     cout << "Data size is " << NUMS << endl << endl;
@@ -222,8 +223,9 @@ int main()
         case 4:
             {
                 cout << "Doing mergeSort....." << endl;
-                int temp[NUMS];
+                int* temp = new int [NUMS];
                 mergeSort(d,temp,0,NUMS);
+                delete []temp;
                 break;
             }
         case 5:
@@ -241,10 +243,11 @@ int main()
         case 7:
             {
                 cout << "Doing radixSort....." << endl;
-                int* tmp = new int[NUMS];
+                int* temp = new int[NUMS];
                 int cnt[10];
-                radix(d,tmp,NUMS,log10(NUMS)+1,10,cnt);
-                delete []tmp;
+                radix(d,temp,NUMS,log10(NUMS)+1,10,cnt);
+                delete []temp;
+                break;
             }
         }
         clock_t end = clock();
