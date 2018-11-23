@@ -1,5 +1,5 @@
 // Cinkye 201730684427  Experiment 4
-// 2018.11.23
+// 2018.11.23   hashDictionary.h
 // Dictionary with hashing
 
 #ifndef HASH_DICTIONARY_H
@@ -185,7 +185,7 @@ public:
 
     int pseudoRandomProbe(const E& e,int i)
     {
-        //To be finished
+        return (hash(e) + rand()) % 17;
     }
 
     void print()
