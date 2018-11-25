@@ -1,6 +1,8 @@
 // Cinkye 201730684427  Experiment 4
 // 2018.11.23   hashDictionary.h
-// Dictionary with hashing
+// Dictionary with hashing. Hashing is functioned directly on the value,
+// because there is no KVpair.
+// The model also added a overflow table for overflow data
 
 #ifndef HASH_DICTIONARY_H
 #define HASH_DICTIONARY_H
@@ -63,41 +65,13 @@ public:
                 size++;
                 overflowSize++;
                 return;
-            }       
+            }
             pos = linearProbe(e,i++);
         }
         usedTable[pos] = 1;
         hashTable[pos] = e;
         size++;
     }
-
-    // E remove(const E& e)    // Remove the record that holds specific value
-    // {
-    //     int pos = hash(e);
-    //     int i = 1;
-    //     while(usedTable[pos] != 0 && i < SIZE)
-    //     {
-    //         if(hashTable[pos] == e)
-    //         {
-    //             usedTable[pos] = 2;
-    //             --size;
-    //             return e;
-    //         }
-    //         pos = linearProbe(e,i++);
-    //     }
-    //     while(i < size)
-    //     {
-    //         if(overflowTable[i - SIZE] == e)
-    //         {
-    //             for(int j = i;j < size-1;++j)
-    //                 overflowTable[j] = overflowTable[j+1];
-    //             size--;
-    //             return e;
-    //         }
-    //         ++i;
-    //     }
-    //     return 777;
-    // }
 
     E remove(int i)
     {

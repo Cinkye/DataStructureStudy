@@ -4,6 +4,9 @@
 // Source code Copyright (C) 2007-2011 by Clifford A. Shaffer.
 
 // The Dictionary abstract class.
+#ifndef DICTIONARY_H
+#define DICTIONARY_H
+
 template <typename Key, typename E>
 class  Dictionary {
 private:
@@ -36,8 +39,9 @@ public:
   // Return: A record matching "k" (NULL if none exists).
   // If multiple records match, return an arbitrary one.
   // k: The key of the record to find
-  virtual E find(const Key& k) const = 0;
+  virtual E find(const Key& k)= 0;
 
   // Return the number of records in the dictionary.
   virtual int size() = 0;
 };
+#endif // DICTIONARY_H

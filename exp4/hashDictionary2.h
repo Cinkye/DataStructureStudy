@@ -1,6 +1,8 @@
 // Cinkye 201730684427  Experiment 4
 // 2018.11.23   hashDictionary2.h
-// Dictionary implemented with a hash table
+// Dictionary implemented with a hash table.
+// Hashing is functioned on the key instead of the value
+// No overflow table added
 
 #ifndef HASH_DICTIONARY_2_H
 #define HASH_DICTIONARY_2_H
@@ -19,6 +21,8 @@ class hashdict : public Dictionary<Key,E>
         int M;
         int currcnt;
         Key EMPTYKEY;
+        Key TOMBKEY;
+        E EMPTYVALUE;
 
         int p(Key k,int i) const
         {
@@ -50,56 +54,133 @@ class hashdict : public Dictionary<Key,E>
             return sum * sum * sum % M;
         }
 
-        int linearProbe(const E& e,int i)
+        int linearProbe(const Key& k,int i)
         {
-            return (h(e) + i) % M;
+            return (h(k) + i) % M;
         }
 
-        int quadraicProbe(const E& e,int i)
+        int quadraicProbe(const Key& k,int i)
         {
-            return (hash_2(e) + 11 * i * i + 13 * i + 19) % M;
+            return (hash_2(k) + 11 * i * i + 13 * i + 19) % M;
         }
 
-        int pseudoRandomProbe(const E& e,int i)
+        int pseudoRandomProbe(const Key& k,int i)
         {
-            return (h(e) + rand()) % M;
+            return (h(k) + rand()) % M;
         }
 
-        void hashInsert(const Key& k, const E& e);
+        void hashInsert(const Key& k, const E& e)
         {
-            int pos = h(e);
+            int pos = h(k);
             int i = 1;
-            while(HT[pos].key() != EMPTYKEY)
+            while(HT[pos].key() != EMPTYKEY && HT[pos].key() != TOMBKEY)
             {
-                if(HT[pos].key() == EMPTYKEY)
-                {
+                if(i == M)
+                    return;
+                pos = linearProbe(k,i);
+                i++;
+            }
+            if(HT[pos].key() == EMPTYKEY)
+            {
                     KVpair<Key,E> tmp(k,e);
                     HT[pos] = tmp;
                     currcnt++;
                     return;
-                }
-                else if(i = M-1) 
-                    return;
-                pos = linearProbe(e,i++);
             }
-            return;
         }
-        E hashSearch(const Key&) const;
-    
+
+        E hashSearch(const Key& k)
+        {
+            int pos = h(k);
+            int i = 1;
+            while(HT[pos].key() != EMPTYKEY && i < currcnt)
+            {
+                if(HT[pos].key() == k)
+                {
+                    return HT[pos].value();
+                }
+                pos = linearProbe(k,i);
+                i++;
+            }
+            return NULL;
+        }
+
     public:
-        hashdict(int sz,Key k)
+        hashdict(int sz,Key k,Key t,E e)
         {
             M = sz;
             EMPTYKEY = k;
+            TOMBKEY = t;
+            EMPTYVALUE = e;
             currcnt = 0;
             HT = new KVpair<Key,E>[sz];
             for(int i = 0;i < M;i++)
-                HT[i].setKey(EMPTYKEY);
+            {
+                KVpair<Key,E> tmp(EMPTYKEY,EMPTYVALUE);
+                HT[i] = tmp;
+            }
         }
 
         ~hashdict()
         {
             delete HT;
+        }
+
+        void clear()
+        {
+            delete HT;
+            HT = new KVpair<Key,E>[M];
+            currcnt = 0;
+            for(int i = 0;i < M;i++)
+            {
+                KVpair<Key,E> tmp(EMPTYKEY,EMPTYVALUE);
+                HT[i] = tmp;
+            }
+        }
+
+        void insert(const Key& k,const E& it)
+        {
+            if(currcnt == M)
+            {
+                cout << "Hash table is full" << endl;
+                exit(-1);
+            }
+            hashInsert(k,it);
+        }
+
+        E remove(const Key& k)
+        {
+            int pos = h(k);
+            int i = 1;
+            while(HT[pos].key() != EMPTYKEY && i <= size())
+            {
+                if(HT[pos].key() == k)
+                {
+                    E tmp = HT[pos].value();
+                    KVpair<Key,E> p(TOMBKEY,EMPTYVALUE);
+                    HT[pos] = p;
+                    currcnt--;
+                    return tmp;
+                }
+                pos = linearProbe(k,i);
+                i++;
+            }
+            return NULL;
+        }
+
+        E removeAny()
+        {
+            if(currcnt != 0)
+            {
+                srand(time(0));
+                int pos = rand() % currcnt;
+                if(HT[pos].key() != EMPTYKEY)
+                {
+                    KVpair<Key,E> tmp(TOMBKEY,EMPTYVALUE);
+                    HT[pos] = tmp;
+                }
+                return HT[pos].value();
+            }
         }
 
         E find(const Key& k)
@@ -112,15 +193,10 @@ class hashdict : public Dictionary<Key,E>
             return currcnt;
         }
 
-        void insert(const Key& k,const E& it)
+        void print()
         {
-            if(currcnt >= M)
-            {
-                cout << "Hash table is full" << endl;
-                exit(-1);
-            }
-            hashInsert(k,it);
-            currcnt++;
+            for(int i = 0;i < M;++i)
+                cout << HT[i].key() << " " << HT[i].value() << endl;
         }
 };
 
