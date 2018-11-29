@@ -39,7 +39,6 @@ int main()
      h->insert(98);
      h->remove(9);
      h->print();
-     cout << h->find(98) << endl << endl;
 
      // Below are testbench for class hashdict
      cout << "Testing class hashdict" << endl;
@@ -52,7 +51,7 @@ int main()
      ha->insert(10,"死");
      ha->insert(10,"以");
      ha->insert(10," ");
-     ha->insert(10,"周瑶");
+     ha->insert(10,"周瑶瑶");
      ha->insert(10,"大傻子");
      ha->print();
 }

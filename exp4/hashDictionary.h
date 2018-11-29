@@ -6,7 +6,7 @@
 
 #ifndef HASH_DICTIONARY_H
 #define HASH_DICTIONARY_H
-#define SIZE 17
+#define SIZE 17             // The size of hash table
 
 #include <iostream>
 #include <cmath>
@@ -19,13 +19,13 @@ template <typename E>
 class HashDictionary
 {
 private:
-    E* hashTable;
-    E* overflowTable;
-    int* usedTable;
-    int size;
-    int overflowSize;
+    E* hashTable;       // Hash table
+    E* overflowTable;   // Overflow table
+    int* usedTable;     // Status of hash table
+    int size;               // Current size
+    int overflowSize;   // Current size of overflow table
 public:
-    HashDictionary()
+    HashDictionary()    // Initialize hash table, overflow table and status table
     {
         hashTable = new E[SIZE];
         overflowTable = new E[200];
@@ -34,14 +34,14 @@ public:
         overflowSize = 0;
     }
 
-    ~HashDictionary()
+    ~HashDictionary()   // Release the memory
     {
         delete []hashTable;
         delete []overflowTable;
         delete []usedTable;
     }
 
-    void clear()
+    void clear()    // Release the memory an re-initialize
     {
         delete []hashTable;
         delete []overflowTable;
@@ -53,61 +53,62 @@ public:
         overflowSize = 0;
     }
 
-    void insert(const E& e)
+    void insert(const E& e)     // Insert element e
     {
-        int pos = hash(e);
-        int i = 1;
-        while(usedTable[pos] == 1)
+        int pos = hash(e);      // Use hash function to calculate the position
+        int i = 1;      // Probe time
+        while(usedTable[pos] == 1)  // If the position is used, probe another place
         {
-            if(pos == hash(e) - 1)
+            if(pos == hash(e) - 1) // If all position are visited, put it in the overflow table
             {
                 overflowTable[size - SIZE] = e;
                 size++;
                 overflowSize++;
                 return;
             }
-            pos = linearProbe(e,i++);
+            pos = linearProbe(e,i++);   // Find next place
         }
+        // If found, add it to the hash table and set status
         usedTable[pos] = 1;
         hashTable[pos] = e;
         size++;
     }
 
-    E remove(int i)
+    E remove(int i) // Remove record at the position
     {
-        if(i < 0 || i >= SIZE+overflowSize)
+        if(i < 0 || i >= SIZE+overflowSize)     // Not a valid position
         {
             cout << "Invalid input" << endl;
             exit(-1);
         }
-        else if(i < SIZE)
+        else if(i < SIZE)   // If it is in the hash table
         {
-            usedTable[i] = 2;
-            size--;
-            return hashTable[i];
+            usedTable[i] = 2;   // Set TOMB
+            size--;     // Size decrement
+            return hashTable[i];    // Return the value in that position
         }
-        else
+        else  // If it is in the overflow table
         {
             E tmp = overflowTable[i-SIZE];
-            for(int j = i-SIZE;j < overflowSize-1;++j)
+            for(int j = i-SIZE;j < overflowSize-1;++j)  // Move forward
                 overflowTable[j] = overflowTable[j+1];
-            size--;
-            overflowSize--;
-            return tmp;
+            size--;     // Size decrement
+            overflowSize--;     // Overflow table size decrement
+            return tmp;     // Return the value in that position
         }
     }
 
-    E removeAny()
+    E removeAny()   // Remove a random element in the table
     {
         srand(time(0));
-        int pos = rand() % size;
-        if(pos < SIZE)
+        int pos = rand() % size;    // Generates a random position
+        if(pos < SIZE)  // If in the hash table
         {
             E tmp = hashTable[pos];
             remove(pos);
             return tmp;
         }
-        else
+        else    // In the overflow table
         {
             E tmp = overflowTable[pos-SIZE];
             remove(pos);
@@ -116,9 +117,9 @@ public:
 
     }
 
-    int find(const E& e)
+    int find(const E& e)    // Return the position that e is stored in
     {
-        int pos = hash(e);
+        int pos = hash(e);  // Trace the element as it is inserted
         int i = 1;
         while(usedTable[pos] != 0)
         {
@@ -128,7 +129,7 @@ public:
             ++i;
         }
         i = 0;
-        while(i < overflowSize)
+        while(i < overflowSize) // Look for it in the overflow table
         {
             if(overflowTable[i] == e)
                 return i+SIZE;
@@ -137,32 +138,32 @@ public:
         return -1;
     }
 
-    int hash(long long e)
+    int hash(long long e)   // Hash function
     {
         return e * e % 17;
     }
 
-    int hash_2(long long e)
+    int hash_2(long long e)     // Another hash function used for probe
     {
         return e * e * e % 17;
     }
 
-    int linearProbe(const E& e,int i)
+    int linearProbe(const E& e,int i)   // Linear probe function
     {
         return (hash(e) + i) % 17;
     }
 
-    int quadraicProbe(const E& e,int i)
+    int quadraicProbe(const E& e,int i) // Quadraic Probe Function
     {
         return (hash_2(e) + 11 * i * i + 13 * i + 19) % 17;
     }
 
-    int pseudoRandomProbe(const E& e,int i)
+    int pseudoRandomProbe(const E& e,int i)     // Pseudo-random Probe Function
     {
         return (hash(e) + rand()) % 17;
     }
 
-    void print()
+    void print()    // Print the hash table and the overflow table
     {
         cout << "Hash Table" << endl;
         for(int i = 0;i < SIZE;++i)

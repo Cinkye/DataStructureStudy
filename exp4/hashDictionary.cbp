@@ -23,8 +23,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="KVpair.h" />
 		<Unit filename="dictionary.h" />
 		<Unit filename="hashDictionary.h" />
+		<Unit filename="hashDictionary2.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
