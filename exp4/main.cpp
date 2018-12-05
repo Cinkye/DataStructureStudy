@@ -11,7 +11,8 @@ int main()
      // Testbench for class HashDictionary
      cout << "Testing class HashDictionary" << endl;
      HashDictionary<int>* h = new HashDictionary<int>();
-     int i = 4;
+     //Testing function insert()
+     cout << "Inserting many records......" << endl << endl;
      h->insert(99);
      h->insert(1);
      h->insert(99);
@@ -37,21 +38,18 @@ int main()
      h->insert(99);
      h->insert(99);
      h->insert(98);
-     h->remove(9);
      h->print();
+     // Testing function remove()
+     cout << "Remove the record in slot 9" << endl;
+     h->remove(9);
+     // Testing function print()
+     h->print();
+     // Testing function find()
+     cout << "Looking for a value 98......" << endl;
+     cout << "The position of the value 98 is " << h->find(98) << endl;
 
      // Below are testbench for class hashdict
      cout << "Testing class hashdict" << endl;
      hashdict<int,char*>* ha = new hashdict<int,char*>(10,-1,-2,"EMPTY");
-     ha->insert(10,"苟");
-     ha->insert(10,"利");
-     ha->insert(10,"国");
-     ha->insert(10,"家");
-     ha->insert(10,"生");
-     ha->insert(10,"死");
-     ha->insert(10,"以");
-     ha->insert(10," ");
-     ha->insert(10,"周瑶瑶");
-     ha->insert(10,"大傻子");
-     ha->print();
+
 }

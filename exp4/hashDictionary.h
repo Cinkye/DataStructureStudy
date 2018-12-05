@@ -143,9 +143,45 @@ public:
         return e * e % 17;
     }
 
+    int hash(int e)   // Hash function
+    {
+        return e * e % 17;
+    }
+
+    int hash(double e)
+    {
+        return (int)(e * e) % 17;
+    }
+
+    int hash(const char* x)   // Hash function for string and char arrays
+    {
+        int i,sum;
+        for(sum = 0,i = 0; x[i] != '\0'; i++)   // Add the ASCII of each character
+            sum += (int) x[i];
+        return sum * sum % 17;     // Mod M
+    }
+
     int hash_2(long long e)     // Another hash function used for probe
     {
         return e * e * e % 17;
+    }
+
+    int hash_2(int e)     // Another hash function used for probe
+    {
+        return e * e * e % 17;
+    }
+
+    int hash_2(string x)
+    {
+        int i ,sum;
+        for(sum = 0,i = 0;x[i] != '\0';i++)
+            sum += (int) x[i];
+        return sum * sum * sum % 17;
+    }
+
+    int hash_2(double e)     // Another hash function used for probe
+    {
+        return (int)(e * e * e) % 17;
     }
 
     int linearProbe(const E& e,int i)   // Linear probe function
