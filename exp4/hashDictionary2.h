@@ -93,7 +93,7 @@ class hashdict : public Dictionary<Key,E>
         {
             int pos = h(k);     // Search it as how it is inserted
             int i = 1;
-            while(HT[pos].key() != EMPTYKEY && i < currcnt)     // If not empty key and probe time less than current size
+            while(HT[pos].key() != EMPTYKEY && i <= M)     // If not empty key and probe time less than current size
             {
                 if(HT[pos].key() == k)      // If matched, return the value
                 {
